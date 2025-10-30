@@ -1,8 +1,18 @@
+# AlgoTradingbot .gitignore
+# Python AI Trading System
+
+# ============================================================================
 # Python
+# ============================================================================
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+
+# C extensions
 *.so
+
+# Distribution / packaging
 .Python
 build/
 develop-eggs/
@@ -16,106 +26,367 @@ parts/
 sdist/
 var/
 wheels/
+pip-wheel-metadata/
+share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
 
-# Virtual Environment
-venv/
-env/
-ENV/
-.venv
+# PyInstaller
+*.manifest
+*.spec
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-.DS_Store
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
 
-# Environment variables
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+pytestdebug.log
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+docs/_static/
+docs/_templates/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# PEP 582
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
 .env
 .env.local
 .env.*.local
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+pythonenv*
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# profiling data
+*.prof
+
+# ============================================================================
+# IDEs and Editors
+# ============================================================================
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+*.swp
+*.swo
+*~
+tags
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# ============================================================================
+# Operating System
+# ============================================================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Linux
+*~
+.directory
+.Trash-*
+.nfs*
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# ============================================================================
+# AlgoTradingbot Specific
+# ============================================================================
+# Data files
+data/raw/*.csv
+data/raw/*.parquet
+data/raw/*.feather
+data/processed/*.csv
+data/processed/*.parquet
+data/processed/*.feather
+data/temp/
+*.pkl
+*.pickle
+*.h5
+*.hdf5
+
+# Model files
+models/*.h5
+models/*.pkl
+models/*.onnx
+models/*.pb
+models/*.pt
+models/*.pth
+models/*.joblib
+models/checkpoints/
+models/experiments/
 
 # Logs
 logs/
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+*.log.*
 
-# Testing
-.coverage
-.coverage.*
-htmlcov/
-.pytest_cache/
-.tox/
-.hypothesis/
+# Configuration with secrets
+.env.production
+.env.secret
+*secrets.json
+*credentials.json
+*.key
+*.pem
 
-# Data
-data/raw/*
-data/processed/*
-!data/raw/.gitkeep
-!data/processed/.gitkeep
+# API Keys (double-check these)
+*api_key*
+*api_secret*
+*alpaca_key*
 
-# Models
-models/*
-!models/.gitkeep
-*.h5
-*.pkl
-*.joblib
-*.onnx
-
-# Database
-*.db
-*.sqlite
-*.sqlite3
-
-# Docker
-.docker/
-docker-compose.override.yml
-
-# Jupyter Notebooks
-.ipynb_checkpoints
-*.ipynb
-
-# MacOS
-.DS_Store
-.AppleDouble
-.LSOverride
+# Trading data
+trades/
+positions/
+orders/
 
 # Backup files
 *.bak
 *.backup
-*.tmp
-
-# Compiled files
-*.pyc
-*.pyo
-*.pyd
-
-# Package files
-*.tar.gz
-*.zip
-
-# Config with secrets
-config/secrets.yaml
-config/production.yaml
-
-# Cache directories
-.cache/
-.mypy_cache/
-.dmypy.json
-.pytype/
-
-# Documentation build
-docs/_build/
-docs/_static/
-docs/_templates/
+*.old
 
 # Temporary files
 tmp/
 temp/
 *.tmp
+
+# Database files (local SQLite if used)
+*.db
+*.sqlite
+*.sqlite3
+
+# Cache directories
+.cache/
+*.cache
+
+# ============================================================================
+# Docker & Infrastructure
+# ============================================================================
+# Docker volumes data (don't commit)
+docker-compose.override.yml
+.dockerignore
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# ============================================================================
+# Machine Learning & Data Science
+# ============================================================================
+# Weights & Biases
+wandb/
+
+# MLflow
+mlruns/
+
+# DVC
+.dvc/cache/
+
+# Tensorboard
+runs/
+**/tensorboard/
+
+# Hydra
+outputs/
+multirun/
+
+# ============================================================================
+# Documentation
+# ============================================================================
+# Build artifacts
+docs/_build/
+docs/.doctrees/
+
+# ============================================================================
+# Testing
+# ============================================================================
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# ============================================================================
+# Security & Secrets
+# ============================================================================
+# Ensure no secrets are committed
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+*secret*
+*password*
+*token*
+
+# Encryption keys
+encryption.key
+*.enc
+
+# ============================================================================
+# Node.js (if using Node for MCP servers)
+# ============================================================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+.npm
+.yarn/
+
+# ============================================================================
+# Misc
+# ============================================================================
+# Compressed files
+*.zip
+*.tar.gz
+*.rar
+
+# Large files
+*.csv.gz
+*.parquet.gz
+
+# Editor backups
+*.bak
+*~
+
+# Python profiling
+*.prof
+*.lprof
+
+# Keep structure files
+!.gitkeep

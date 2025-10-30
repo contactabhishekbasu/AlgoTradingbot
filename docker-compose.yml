@@ -1,33 +1,68 @@
 version: '3.9'
 
 services:
+  # PostgreSQL Database
   postgres:
     image: postgres:14-alpine
     container_name: trading_postgres
+    restart: unless-stopped
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-trading}
       POSTGRES_USER: ${POSTGRES_USER:-trading_user}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set}
+      POSTGRES_INITDB_ARGS: "-E UTF8 --locale=C"
+      PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - ./sql/migrations:/docker-entrypoint-initdb.d:ro
+      - ./logs/postgres:/var/log/postgresql
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-trading_user}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-trading_user} -d ${POSTGRES_DB:-trading}"]
       interval: 10s
       timeout: 5s
       retries: 5
-    restart: unless-stopped
+      start_period: 10s
     networks:
       - trading_network
+    command: >
+      postgres
+      -c shared_buffers=256MB
+      -c max_connections=200
+      -c effective_cache_size=1GB
+      -c maintenance_work_mem=128MB
+      -c checkpoint_completion_target=0.9
+      -c wal_buffers=16MB
+      -c default_statistics_target=100
+      -c random_page_cost=1.1
+      -c effective_io_concurrency=200
+      -c work_mem=8MB
+      -c min_wal_size=1GB
+      -c max_wal_size=4GB
+      -c log_statement=mod
+      -c log_duration=on
+      -c log_line_prefix='%m [%p] %q%u@%d '
 
+  # Redis Cache
   redis:
     image: redis:7-alpine
     container_name: trading_redis
-    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
+    restart: unless-stopped
+    command: >
+      redis-server
+      --appendonly yes
+      --appendfsync everysec
+      --maxmemory 2gb
+      --maxmemory-policy allkeys-lru
+      --save 900 1
+      --save 300 10
+      --save 60 10000
+      --loglevel notice
+      --logfile /var/log/redis/redis.log
     volumes:
       - redis_data:/data
+      - ./logs/redis:/var/log/redis
     ports:
       - "${REDIS_PORT:-6379}:6379"
     healthcheck:
@@ -35,16 +70,108 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    restart: unless-stopped
+      start_period: 5s
     networks:
       - trading_network
+    sysctls:
+      - net.core.somaxconn=1024
+
+  # Redis Commander (Web UI for Redis - Development Only)
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: trading_redis_commander
+    restart: unless-stopped
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - "8081:8081"
+    networks:
+      - trading_network
+    depends_on:
+      redis:
+        condition: service_healthy
+    profiles:
+      - dev  # Only start in dev profile
+
+  # PgAdmin (PostgreSQL Web UI - Development Only)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: trading_pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@algotrading bot.local}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+      - ./config/pgadmin/servers.json:/pgadmin4/servers.json:ro
+    ports:
+      - "8080:80"
+    networks:
+      - trading_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+    profiles:
+      - dev  # Only start in dev profile
+
+  # Prometheus (Metrics - Future)
+  # prometheus:
+  #   image: prom/prometheus:latest
+  #   container_name: trading_prometheus
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ./config/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+  #     - prometheus_data:/prometheus
+  #   ports:
+  #     - "9090:9090"
+  #   command:
+  #     - '--config.file=/etc/prometheus/prometheus.yml'
+  #     - '--storage.tsdb.path=/prometheus'
+  #     - '--storage.tsdb.retention.time=30d'
+  #   networks:
+  #     - trading_network
+  #   profiles:
+  #     - monitoring
+
+  # Grafana (Monitoring Dashboard - Future)
+  # grafana:
+  #   image: grafana/grafana:latest
+  #   container_name: trading_grafana
+  #   restart: unless-stopped
+  #   environment:
+  #     - GF_SECURITY_ADMIN_USER=${GRAFANA_USER:-admin}
+  #     - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+  #     - GF_INSTALL_PLUGINS=redis-datasource
+  #   volumes:
+  #     - grafana_data:/var/lib/grafana
+  #     - ./config/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+  #     - ./config/grafana/datasources:/etc/grafana/provisioning/datasources:ro
+  #   ports:
+  #     - "3000:3000"
+  #   networks:
+  #     - trading_network
+  #   depends_on:
+  #     - prometheus
+  #   profiles:
+  #     - monitoring
+
+networks:
+  trading_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
 
 volumes:
   postgres_data:
     driver: local
   redis_data:
     driver: local
-
-networks:
-  trading_network:
-    driver: bridge
+  pgadmin_data:
+    driver: local
+  # prometheus_data:
+  #   driver: local
+  # grafana_data:
+  #   driver: local

@@ -1,48 +1,118 @@
-# Core Data & Analysis
-yfinance==0.2.40
-pandas==2.2.0
-numpy==1.26.0
-ta-lib==0.4.28
+# Core Python Dependencies
+# AlgoTradingbot - AI-Powered Trading System
+# Python 3.11+
 
-# Database & Caching
-psycopg2-binary==2.9.9
-redis==5.0.0
-alembic==1.13.0
-sqlalchemy==2.0.23
+# Data Processing
+pandas>=2.1.0
+numpy>=1.24.0
+polars>=0.19.0  # Future high-performance data processing
+pyarrow>=13.0.0  # Columnar data format
 
-# MCP Framework & AI
-mcp==0.9.0
+# Machine Learning - Deep Learning
+tensorflow>=2.15.0  # LSTM models
+tensorflow-metal>=1.1.0; sys_platform == 'darwin'  # Apple Silicon GPU acceleration
+keras>=2.15.0
 
-# HTTP & Async
-aiohttp==3.9.1
-requests==2.31.0
-asyncio==3.4.3
+# Machine Learning - Gradient Boosting
+xgboost>=2.0.0
+scikit-learn>=1.4.0
+lightgbm>=4.1.0  # Alternative gradient boosting (future)
 
-# Utilities
-python-dotenv==1.0.0
-tenacity==8.2.3
-pydantic==2.5.0
-pydantic-settings==2.1.0
+# Machine Learning - Utilities
+joblib>=1.3.0  # Model persistence
+optuna>=3.4.0  # Hyperparameter optimization (future)
 
-# Logging & Monitoring
-structlog==24.1.0
-python-json-logger==2.0.7
+# Data Visualization
+matplotlib>=3.8.0
+seaborn>=0.13.0
+plotly>=5.17.0  # Interactive charts for dashboard
+
+# Technical Analysis
+ta-lib>=0.4.28  # Technical indicators (requires C library)
+pandas-ta>=0.3.14b  # Pure Python alternative
+
+# Market Data
+yfinance>=0.2.31  # Yahoo Finance API
+alpaca-py>=0.16.0  # Alpaca Trading API (future)
+alpaca-trade-api>=3.0.0  # Alternative Alpaca client
+
+# Database
+psycopg2-binary>=2.9.9  # PostgreSQL adapter
+sqlalchemy>=2.0.23  # ORM
+alembic>=1.12.1  # Database migrations
+
+# Caching
+redis>=5.0.1  # Redis client
+hiredis>=2.2.3  # High-performance Redis parser
+
+# Async & Networking
+aiohttp>=3.9.0  # Async HTTP client
+asyncio-mqtt>=0.16.1  # Async MQTT (future)
+websockets>=12.0  # WebSocket support
+
+# MCP Server Development
+mcp>=0.1.0  # Model Context Protocol SDK (if available)
+fastmcp>=0.1.0  # Fast MCP implementation (if available)
+
+# API Development (Future)
+fastapi>=0.104.1
+uvicorn[standard]>=0.24.0
+pydantic>=2.5.0
+python-multipart>=0.0.6
+
+# Authentication & Security (Future)
+pyjwt>=2.8.0
+cryptography>=41.0.7
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+firebase-admin>=6.2.0  # Firebase integration
+
+# Performance Optimization
+numba>=0.58.1  # JIT compilation
+cython>=3.0.5  # C extensions
+onnx>=1.15.0  # Model optimization (future)
+onnxruntime>=1.16.3  # ONNX inference (future)
 
 # Testing
-pytest==8.0.0
-pytest-asyncio==0.23.0
-pytest-cov==4.1.0
-pytest-mock==3.12.0
-pytest-redis==3.0.2
-pytest-postgresql==5.0.0
-faker==22.0.0
+pytest>=7.4.3
+pytest-asyncio>=0.21.1
+pytest-cov>=4.1.0
+pytest-mock>=3.12.0
+pytest-xdist>=3.5.0  # Parallel test execution
+hypothesis>=6.92.0  # Property-based testing
+faker>=20.1.0  # Test data generation
 
-# Development Tools
-black==24.1.0
-flake8==7.0.0
-mypy==1.8.0
-isort==5.13.2
-pre-commit==3.6.0
+# Code Quality
+black>=23.12.0  # Code formatter
+isort>=5.13.0  # Import sorter
+flake8>=6.1.0  # Linting
+pylint>=3.0.3  # Advanced linting
+mypy>=1.7.1  # Type checking
+bandit>=1.7.5  # Security linting
+pre-commit>=3.6.0  # Git hooks
 
-# Performance
-numba==0.59.0
+# Monitoring & Logging
+prometheus-client>=0.19.0  # Metrics (future)
+python-json-logger>=2.0.7  # Structured logging
+sentry-sdk>=1.39.0  # Error tracking (future)
+
+# Utilities
+python-dotenv>=1.0.0  # Environment variables
+pytz>=2023.3  # Timezone handling
+click>=8.1.7  # CLI framework
+rich>=13.7.0  # Terminal formatting
+tqdm>=4.66.1  # Progress bars
+schedule>=1.2.0  # Job scheduling (future)
+
+# Jupyter & Notebooks (Development)
+jupyter>=1.0.0
+ipython>=8.18.1
+notebook>=7.0.6
+
+# Documentation
+sphinx>=7.2.6  # Documentation generator (future)
+sphinx-rtd-theme>=2.0.0  # Documentation theme (future)
+
+# Additional Research Tools
+shap>=0.43.0  # Model explainability
+lime>=0.2.0.1  # Local interpretable model explanations (future)
