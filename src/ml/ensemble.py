@@ -483,3 +483,92 @@ class EnsembleModel:
             'xgboost_accuracy': xgb_accuracy,
             'ensemble_accuracy': ensemble_accuracy
         }
+
+    async def load(self, path: str):
+        """
+        Load pre-trained ensemble model
+
+        Args:
+            path: Directory path containing model files
+        """
+        import os
+        from pathlib import Path
+
+        model_dir = Path(path)
+        if not model_dir.exists():
+            raise FileNotFoundError(f"Model directory not found: {path}")
+
+        # Load LSTM model
+        lstm_path = model_dir / 'lstm_model.h5'
+        if lstm_path.exists():
+            from .models.lstm_attention import LSTMWithAttention
+            # Need to know the input shape - use a placeholder
+            self.lstm_model = LSTMWithAttention(input_shape=(60, 10), num_classes=3)
+            self.lstm_model.load_weights(str(lstm_path))
+            logger.info(f"Loaded LSTM model from {lstm_path}")
+
+        # Load XGBoost model
+        xgb_path = model_dir / 'xgboost_model.json'
+        if xgb_path.exists():
+            from .models.xgboost_model import XGBoostModel
+            self.xgboost_model = XGBoostModel()
+            self.xgboost_model.load(str(xgb_path))
+            logger.info(f"Loaded XGBoost model from {xgb_path}")
+
+        # Create ensemble
+        if self.lstm_model and self.xgboost_model:
+            models = {
+                'lstm': self.lstm_model,
+                'xgboost': self.xgboost_model
+            }
+            self.ensemble = EnsemblePredictor(
+                models=models,
+                initial_weights={'lstm': 0.5, 'xgboost': 0.5},
+                adaptive=True
+            )
+            logger.info("Ensemble model loaded successfully")
+
+    async def predict(self, symbol: str) -> Dict[str, Any]:
+        """
+        Generate trading signal for a symbol
+
+        Args:
+            symbol: Stock symbol (e.g., 'AAPL')
+
+        Returns:
+            Dictionary with signal, confidence, and price
+        """
+        from data.yfinance_client import YFinanceClient
+        from .feature_engineering import FeatureEngineer
+
+        if self.ensemble is None:
+            raise ValueError("Model not trained or loaded. Call train() or load() first.")
+
+        # Fetch recent data
+        client = YFinanceClient()
+        try:
+            data = await client.get_historical_data(symbol, period='3mo')
+            current_price = await client.get_current_price(symbol)
+        finally:
+            await client.close()
+
+        # Create features
+        fe = FeatureEngineer()
+        features = fe.create_features(data)
+
+        # Get latest features for prediction
+        X_latest = features.iloc[-1:].values
+
+        # Get prediction with confidence
+        prediction, confidence = self.ensemble.predict_with_confidence(X_latest)
+
+        # Map prediction to signal
+        signal_map = {0: 'SELL', 1: 'HOLD', 2: 'BUY'}
+        signal = signal_map.get(int(prediction[0]), 'HOLD')
+
+        return {
+            'signal': signal,
+            'confidence': float(confidence[0]),
+            'price': float(current_price),
+            'symbol': symbol
+        }
