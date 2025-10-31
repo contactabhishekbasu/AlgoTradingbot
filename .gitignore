@@ -339,6 +339,10 @@ docs/.doctrees/
 htmlcov/
 .tox/
 
+# Security scan reports
+bandit_report*.json
+bandit_report*.txt
+
 # ============================================================================
 # Security & Secrets
 # ============================================================================

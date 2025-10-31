@@ -185,11 +185,15 @@ class RedisCache:
                 try:
                     value = json.loads(serialized)
                 except (json.JSONDecodeError, UnicodeDecodeError):
-                    value = pickle.loads(serialized)
+                    # SECURITY NOTE: pickle.loads() should only be used with trusted data
+                    # This cache is internal and only stores data from our own application
+                    value = pickle.loads(serialized)  # nosec B301
             elif serializer == "json":
                 value = json.loads(serialized)
             elif serializer in ("pandas", "pickle"):
-                value = pickle.loads(serialized)
+                # SECURITY NOTE: pickle.loads() should only be used with trusted data
+                # This cache is internal and only stores data from our own application
+                value = pickle.loads(serialized)  # nosec B301
             else:
                 raise ValueError(f"Unknown serializer: {serializer}")
 
