@@ -373,8 +373,14 @@ class DatabaseClient:
             Dictionary with table information
         """
         try:
+            # Validate table name to prevent SQL injection
+            # Only allow alphanumeric characters and underscores
+            if not table.replace('_', '').isalnum():
+                raise ValueError(f"Invalid table name: {table}")
+
             # Get row count
-            count_query = f"SELECT COUNT(*) as count FROM {table}"
+            # Note: Table names cannot be parameterized, but we've validated the input
+            count_query = f"SELECT COUNT(*) as count FROM {table}"  # nosec B608
             result = self.execute(count_query)
             row_count = result.fetchone()[0]
 

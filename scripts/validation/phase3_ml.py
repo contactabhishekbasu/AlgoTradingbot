@@ -89,7 +89,7 @@ class Phase3MLValidator(BaseValidator):
         """Check LSTM model training"""
         async def check():
             try:
-                from ml.models.lstm_attention import LSTMAttentionModel
+                from ml.models.lstm_attention import LSTMWithAttention
                 from ml.feature_engineering import FeatureEngineer
                 from data.yfinance_client import YFinanceClient
 
@@ -103,7 +103,7 @@ class Phase3MLValidator(BaseValidator):
                 X, y = fe.create_sequences(features, sequence_length=60)
 
                 epochs = 5 if self.quick_mode else 10
-                model = LSTMAttentionModel(input_shape=(60, X.shape[2]))
+                model = LSTMWithAttention(input_shape=(60, X.shape[2]))
                 history = model.train(X, y, epochs=epochs, batch_size=32, validation_split=0.2)
 
                 train_accuracy = history.history['accuracy'][-1]
