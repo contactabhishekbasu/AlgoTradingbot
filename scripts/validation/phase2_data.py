@@ -166,14 +166,17 @@ class Phase2DataValidator(BaseValidator):
                 from data.database import DatabaseClient
 
                 db = DatabaseClient()
-                await db.connect()
+                # DatabaseClient connects automatically via constructor
 
-                # Test query
-                result = await db.execute_query("SELECT version();")
+                # Test connection (synchronous method)
+                connected = db.test_connection()
 
-                await db.close()
+                db.close()
 
-                return True, "Connected successfully", {'connected': True}
+                if connected:
+                    return True, "Connected successfully", {'connected': True}
+                else:
+                    return False, "Connection test failed", {'connected': False}
 
             except Exception as e:
                 return False, f"Connection failed: {str(e)}", {}
@@ -185,22 +188,22 @@ class Phase2DataValidator(BaseValidator):
         """Check database storage operations"""
         async def check():
             try:
-                from data.database import DatabaseManager
+                from data.database import DatabaseClient
                 from data.yfinance_client import YFinanceClient
 
                 client = YFinanceClient()
                 data = await client.get_historical_data('AAPL', period='5d')
 
-                db = DatabaseManager()
-                await db.connect()
+                db = DatabaseClient()
+                # DatabaseClient connects automatically via constructor
 
-                # Store data
-                rows_stored = await db.store_market_data('AAPL', data)
+                # Store data (synchronous method)
+                rows_stored = db.store_market_data(data, 'AAPL')
 
-                # Retrieve data
-                retrieved = await db.get_market_data('AAPL', limit=5)
+                # Retrieve data (synchronous method)
+                retrieved = db.fetch_market_data('AAPL', limit=5)
 
-                await db.close()
+                db.close()
                 await client.close()
 
                 if rows_stored >= 5 and len(retrieved) >= 5:
@@ -227,20 +230,20 @@ class Phase2DataValidator(BaseValidator):
                 from cache.redis_client import RedisCache
 
                 cache = RedisCache()
-                await cache.connect()
+                # RedisCache connects automatically via the client property
 
-                # Test set
+                # Test set (synchronous method)
                 test_key = 'validation_test'
                 test_value = {'price': 123.45, 'timestamp': '2025-10-31'}
-                await cache.set(test_key, test_value, ttl=60)
+                cache.set(test_key, test_value, ttl=60)
 
-                # Test get
-                retrieved = await cache.get(test_key)
+                # Test get (synchronous method)
+                retrieved = cache.get(test_key)
 
-                # Test delete
-                await cache.delete(test_key)
+                # Test delete (synchronous method)
+                cache.delete(test_key)
 
-                await cache.close()
+                cache.close()
 
                 if retrieved and retrieved.get('price') == 123.45:
                     return True, "Cache set/get/delete working", {'retrieved': retrieved}

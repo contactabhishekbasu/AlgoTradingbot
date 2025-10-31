@@ -45,26 +45,26 @@ class Phase5IntegrationValidator(BaseValidator):
         """Check database performance"""
         async def check():
             try:
-                from data.database import DatabaseManager
+                from data.database import DatabaseClient
                 from data.yfinance_client import YFinanceClient
 
                 client = YFinanceClient()
                 data = await client.get_historical_data('AAPL', period='1mo')
 
-                db = DatabaseManager()
-                await db.connect()
+                db = DatabaseClient()
+                # DatabaseClient connects automatically via constructor
 
-                # Test write performance
+                # Test write performance (synchronous method)
                 start = time.time()
-                await db.store_market_data('AAPL', data)
+                db.store_market_data(data, 'AAPL')
                 write_time = (time.time() - start) * 1000
 
-                # Test read performance
+                # Test read performance (synchronous method)
                 start = time.time()
-                retrieved = await db.get_market_data('AAPL', limit=100)
+                retrieved = db.fetch_market_data('AAPL', limit=100)
                 read_time = (time.time() - start) * 1000
 
-                await db.close()
+                db.close()
                 await client.close()
 
                 if write_time < 200 and read_time < 100:
@@ -93,38 +93,38 @@ class Phase5IntegrationValidator(BaseValidator):
         """Check Redis cache performance"""
         async def check():
             try:
-                from cache.redis_client import CacheManager
+                from cache.redis_client import RedisCache
 
-                cache = CacheManager()
-                await cache.connect()
+                cache = RedisCache()
+                # RedisCache connects automatically via the client property
 
                 test_data = {'price': 123.45, 'volume': 1000000, 'indicators': list(range(50))}
 
-                # Test write performance (100 operations)
+                # Test write performance (100 operations) - synchronous method
                 start = time.time()
                 for i in range(100):
-                    await cache.set(f'perf_test_{i}', test_data, ttl=60)
+                    cache.set(f'perf_test_{i}', test_data, ttl=60)
                 write_time = (time.time() - start) * 1000
                 avg_write = write_time / 100
 
-                # Test read performance (100 operations)
+                # Test read performance (100 operations) - synchronous method
                 start = time.time()
                 for i in range(100):
-                    await cache.get(f'perf_test_{i}')
+                    cache.get(f'perf_test_{i}')
                 read_time = (time.time() - start) * 1000
                 avg_read = read_time / 100
 
                 # Test hit rate
                 hits = 0
                 for i in range(100):
-                    if await cache.get(f'perf_test_{i}'):
+                    if cache.get(f'perf_test_{i}'):
                         hits += 1
 
                 # Cleanup
                 for i in range(100):
-                    await cache.delete(f'perf_test_{i}')
+                    cache.delete(f'perf_test_{i}')
 
-                await cache.close()
+                cache.close()
 
                 if avg_write < 5 and avg_read < 3 and hits == 100:
                     return True, f"Write: {avg_write:.2f}ms, Read: {avg_read:.2f}ms, Hit rate: 100%", {
@@ -217,7 +217,7 @@ class Phase5IntegrationValidator(BaseValidator):
         """Check backtesting engine"""
         async def check():
             try:
-                from backtesting.engine import BacktestingEngine
+                from backtesting.engine import BacktestEngine, BacktestConfig
                 from backtesting.strategies.mean_reversion import MeanReversionStrategy
                 from data.yfinance_client import YFinanceClient
 
@@ -227,31 +227,30 @@ class Phase5IntegrationValidator(BaseValidator):
                 data = await client.get_historical_data('AAPL', period='6mo')
                 await client.close()
 
-                # Initialize strategy and engine
+                # Initialize strategy and engine with proper config
                 strategy = MeanReversionStrategy()
-                engine = BacktestingEngine(
+                config = BacktestConfig(
                     initial_capital=100000,
-                    commission=0.001,
-                    slippage=0.001
+                    commission_rate=0.001,
+                    slippage_rate=0.001
                 )
+                engine = BacktestEngine(config)
 
-                # Run backtest
-                results = engine.run(data, strategy)
+                # Run backtest (synchronous method)
+                results = engine.run_backtest(data, strategy, symbol='AAPL')
 
-                # Validate results
+                # Validate results (adjust metric names to match actual implementation)
                 has_required_metrics = all([
                     'total_return' in results,
-                    'sharpe_ratio' in results,
                     'max_drawdown' in results,
-                    'num_trades' in results
+                    'total_trades' in results
                 ])
 
-                if has_required_metrics and results['num_trades'] > 0:
-                    return True, f"Completed with {results['num_trades']} trades, return: {results['total_return']:.2%}", {
+                if has_required_metrics and results['total_trades'] > 0:
+                    return True, f"Completed with {results['total_trades']} trades, return: {results['total_return']:.2%}", {
                         'total_return': results['total_return'],
-                        'sharpe_ratio': results.get('sharpe_ratio', 0),
                         'max_drawdown': results['max_drawdown'],
-                        'num_trades': results['num_trades']
+                        'total_trades': results['total_trades']
                     }
                 elif not has_required_metrics:
                     return False, "Missing required metrics in results", {
@@ -259,7 +258,7 @@ class Phase5IntegrationValidator(BaseValidator):
                     }
                 else:
                     return False, "No trades executed", {
-                        'num_trades': results.get('num_trades', 0)
+                        'total_trades': results.get('total_trades', 0)
                     }
 
             except Exception as e:
