@@ -53,7 +53,8 @@ class Phase2DataValidator(BaseValidator):
                 from data.yfinance_client import YFinanceClient
 
                 client = YFinanceClient()
-                price = await client.get_current_price('AAPL')
+                price_data = client.get_current_price('AAPL')
+                price = price_data['price']
                 await client.close()
 
                 if price and 50 < price < 300:  # Reasonable range for AAPL
@@ -74,7 +75,7 @@ class Phase2DataValidator(BaseValidator):
                 from data.yfinance_client import YFinanceClient
 
                 client = YFinanceClient()
-                data = await client.get_historical_data('AAPL', period='5d')
+                data = client.get_historical_data('AAPL', period='5d')
                 await client.close()
 
                 if len(data) >= 5:
@@ -101,7 +102,7 @@ class Phase2DataValidator(BaseValidator):
                 from data.validators import DataValidator
 
                 client = YFinanceClient()
-                data = await client.get_historical_data('AAPL', period='1mo')
+                data = client.get_historical_data('AAPL', period='1mo')
 
                 validator = DataValidator()
                 is_valid, errors = validator.validate_ohlcv(data)
@@ -133,7 +134,7 @@ class Phase2DataValidator(BaseValidator):
                 from data.yfinance_client import YFinanceClient
 
                 client = YFinanceClient()
-                data = await client.get_historical_data('AAPL', period='3mo')
+                data = client.get_historical_data('AAPL', period='3mo')
 
                 ti = TechnicalIndicators()
                 rsi = ti.calculate_rsi(data['Close'])
@@ -192,7 +193,7 @@ class Phase2DataValidator(BaseValidator):
                 from data.yfinance_client import YFinanceClient
 
                 client = YFinanceClient()
-                data = await client.get_historical_data('AAPL', period='5d')
+                data = client.get_historical_data('AAPL', period='5d')
 
                 db = DatabaseClient()
                 # DatabaseClient connects automatically via constructor
