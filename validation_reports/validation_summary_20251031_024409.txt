@@ -1,0 +1,50 @@
+================================================================================
+AlgoTradingbot Validation Report
+================================================================================
+Generated: 2025-10-31 02:44:09
+
+Metadata:
+  platform: Linux
+  platform_version: #1 SMP Sun Jan 10 15:06:54 PST 2016
+  python_version: 3.11.14
+  quick_mode: False
+  phases_run: [2]
+
+Overall Summary:
+  Total Phases: 1
+  Phases Passed: 0
+  Total Checks: 7
+  Checks Passed: 0
+  Pass Rate: 0.0%
+  Total Duration: 2.5s
+  Status: ❌ FAIL
+
+--------------------------------------------------------------------------------
+Phase 2: Data Layer
+  Status: ❌ FAIL
+  Checks: 0/7 passed (0.0%)
+  Duration: 2.5s
+
+  ❌ FAIL API Connectivity
+      Failed to connect: argument of type 'NoneType' is not iterable
+      Duration: 2102.5ms
+  ❌ FAIL Historical Data Fetching
+      Failed: argument of type 'NoneType' is not iterable
+      Duration: 44.6ms
+  ❌ FAIL Data Validation
+      Failed: argument of type 'NoneType' is not iterable
+      Duration: 25.7ms
+  ❌ FAIL Technical Indicators
+      Failed: No data available for AAPL
+      Duration: 15.1ms
+  ❌ FAIL Database Connection
+      Connection failed: cannot import name 'DatabaseManager' from 'data.database' (/home/user/AlgoTradingbot/src/data/database.py)
+      Duration: 189.1ms
+  ❌ FAIL Database Storage
+      Failed: cannot import name 'DatabaseManager' from 'data.database' (/home/user/AlgoTradingbot/src/data/database.py)
+      Duration: 0.0ms
+  ❌ FAIL Redis Cache
+      Failed: cannot import name 'CacheManager' from 'cache.redis_client' (/home/user/AlgoTradingbot/src/cache/redis_client.py)
+      Duration: 77.6ms
+
+================================================================================

@@ -1,0 +1,106 @@
+{
+  "timestamp": "2025-10-31T01:38:50.399320",
+  "metadata": {
+    "platform": "Linux",
+    "platform_version": "#1 SMP Sun Jan 10 15:06:54 PST 2016",
+    "python_version": "3.11.14",
+    "quick_mode": false,
+    "phases_run": [
+      2
+    ]
+  },
+  "summary": {
+    "total_phases": 1,
+    "phases_passed": 0,
+    "total_checks": 7,
+    "checks_passed": 0,
+    "overall_pass_rate": 0.0,
+    "total_duration_seconds": 0.032798,
+    "all_passed": false
+  },
+  "phases": [
+    {
+      "phase_number": 2,
+      "phase_name": "Data Layer",
+      "results": [
+        {
+          "name": "API Connectivity",
+          "status": "FAIL",
+          "status_display": "\u274c FAIL",
+          "message": "Failed to connect: No module named 'pandas'",
+          "details": {},
+          "duration_ms": 6.59,
+          "timestamp": "2025-10-31T01:38:50.373897",
+          "passed": false
+        },
+        {
+          "name": "Historical Data Fetching",
+          "status": "FAIL",
+          "status_display": "\u274c FAIL",
+          "message": "Failed: No module named 'pandas'",
+          "details": {},
+          "duration_ms": 1.57,
+          "timestamp": "2025-10-31T01:38:50.375531",
+          "passed": false
+        },
+        {
+          "name": "Data Validation",
+          "status": "FAIL",
+          "status_display": "\u274c FAIL",
+          "message": "Failed: No module named 'pandas'",
+          "details": {},
+          "duration_ms": 1.82,
+          "timestamp": "2025-10-31T01:38:50.377399",
+          "passed": false
+        },
+        {
+          "name": "Technical Indicators",
+          "status": "FAIL",
+          "status_display": "\u274c FAIL",
+          "message": "Failed: No module named 'numpy'",
+          "details": {},
+          "duration_ms": 5.56,
+          "timestamp": "2025-10-31T01:38:50.383033",
+          "passed": false
+        },
+        {
+          "name": "Database Connection",
+          "status": "FAIL",
+          "status_display": "\u274c FAIL",
+          "message": "Connection failed: No module named 'pandas'",
+          "details": {},
+          "duration_ms": 3.96,
+          "timestamp": "2025-10-31T01:38:50.387034",
+          "passed": false
+        },
+        {
+          "name": "Database Storage",
+          "status": "FAIL",
+          "status_display": "\u274c FAIL",
+          "message": "Failed: No module named 'pandas'",
+          "details": {},
+          "duration_ms": 1.6,
+          "timestamp": "2025-10-31T01:38:50.388679",
+          "passed": false
+        },
+        {
+          "name": "Redis Cache",
+          "status": "FAIL",
+          "status_display": "\u274c FAIL",
+          "message": "Failed: No module named 'pandas'",
+          "details": {},
+          "duration_ms": 9.78,
+          "timestamp": "2025-10-31T01:38:50.398502",
+          "passed": false
+        }
+      ],
+      "passed_count": 0,
+      "total_count": 7,
+      "pass_rate": 0.0,
+      "duration_seconds": 0.03,
+      "passed": false,
+      "start_time": "2025-10-31T01:38:50.366043",
+      "end_time": "2025-10-31T01:38:50.398841"
+    }
+  ]
+}

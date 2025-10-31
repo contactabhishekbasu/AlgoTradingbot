@@ -13,8 +13,8 @@ from tenacity import (
     wait_exponential,
 )
 
-from ..utils.config import settings
-from ..utils.logger import logger
+from utils.config import settings
+from utils.logger import logger
 
 
 class RateLimiter:

@@ -1,0 +1,50 @@
+================================================================================
+AlgoTradingbot Validation Report
+================================================================================
+Generated: 2025-10-31 02:41:05
+
+Metadata:
+  platform: Linux
+  platform_version: #1 SMP Sun Jan 10 15:06:54 PST 2016
+  python_version: 3.11.14
+  quick_mode: False
+  phases_run: [2]
+
+Overall Summary:
+  Total Phases: 1
+  Phases Passed: 0
+  Total Checks: 7
+  Checks Passed: 0
+  Pass Rate: 0.0%
+  Total Duration: 4.3s
+  Status: ❌ FAIL
+
+--------------------------------------------------------------------------------
+Phase 2: Data Layer
+  Status: ❌ FAIL
+  Checks: 0/7 passed (0.0%)
+  Duration: 4.3s
+
+  ❌ FAIL API Connectivity
+      Failed to connect: attempted relative import beyond top-level package
+      Duration: 4118.0ms
+  ❌ FAIL Historical Data Fetching
+      Failed: attempted relative import beyond top-level package
+      Duration: 0.8ms
+  ❌ FAIL Data Validation
+      Failed: attempted relative import beyond top-level package
+      Duration: 0.8ms
+  ❌ FAIL Technical Indicators
+      Failed: attempted relative import beyond top-level package
+      Duration: 2.2ms
+  ❌ FAIL Database Connection
+      Connection failed: No module named 'sqlalchemy'
+      Duration: 1.9ms
+  ❌ FAIL Database Storage
+      Failed: No module named 'sqlalchemy'
+      Duration: 1.7ms
+  ❌ FAIL Redis Cache
+      Failed: attempted relative import beyond top-level package
+      Duration: 141.0ms
+
+================================================================================

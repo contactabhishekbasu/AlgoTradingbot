@@ -8,8 +8,8 @@ import pandas as pd
 import redis
 from redis.exceptions import ConnectionError, RedisError
 
-from ..utils.config import settings
-from ..utils.logger import logger
+from utils.config import settings
+from utils.logger import logger
 
 
 class RedisCache:
