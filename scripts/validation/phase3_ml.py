@@ -52,7 +52,7 @@ class Phase3MLValidator(BaseValidator):
                 from data.yfinance_client import YFinanceClient
 
                 client = YFinanceClient()
-                data = await client.get_historical_data('AAPL', period='6mo')
+                data = client.get_historical_data('AAPL', period='6mo')
 
                 fe = FeatureEngineer()
                 features = fe.create_features(data)
@@ -96,7 +96,7 @@ class Phase3MLValidator(BaseValidator):
                 print("    Training LSTM model (this may take a few minutes)...")
 
                 client = YFinanceClient()
-                data = await client.get_historical_data('AAPL', period='1y')
+                data = client.get_historical_data('AAPL', period='1y')
 
                 fe = FeatureEngineer()
                 features = fe.create_features(data)
@@ -144,7 +144,7 @@ class Phase3MLValidator(BaseValidator):
                 print("    Training XGBoost model...")
 
                 client = YFinanceClient()
-                data = await client.get_historical_data('AAPL', period='1y')
+                data = client.get_historical_data('AAPL', period='1y')
 
                 fe = FeatureEngineer()
                 features = fe.create_features(data)
@@ -192,7 +192,7 @@ class Phase3MLValidator(BaseValidator):
                 print("    Training Ensemble model...")
 
                 client = YFinanceClient()
-                data = await client.get_historical_data('AAPL', period='1y')
+                data = client.get_historical_data('AAPL', period='1y')
 
                 fe = FeatureEngineer()
                 features = fe.create_features(data)
@@ -240,7 +240,7 @@ class Phase3MLValidator(BaseValidator):
                 import numpy as np
 
                 client = YFinanceClient()
-                data = await client.get_historical_data('AAPL', period='6mo')
+                data = client.get_historical_data('AAPL', period='6mo')
 
                 fe = FeatureEngineer()
                 features = fe.create_features(data)

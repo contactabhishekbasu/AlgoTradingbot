@@ -412,3 +412,9 @@ class YFinanceClient:
                 error=str(e),
             )
             raise
+
+    async def close(self):
+        """Close the client (async compatibility method)."""
+        # No-op method for async compatibility
+        # yfinance doesn't maintain persistent connections
+        pass

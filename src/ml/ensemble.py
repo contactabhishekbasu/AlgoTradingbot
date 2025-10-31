@@ -10,7 +10,7 @@ Features:
 
 import numpy as np
 import pandas as pd
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 import logging
 from collections import deque
 import json
@@ -547,8 +547,9 @@ class EnsembleModel:
         # Fetch recent data
         client = YFinanceClient()
         try:
-            data = await client.get_historical_data(symbol, period='3mo')
-            current_price = await client.get_current_price(symbol)
+            data = client.get_historical_data(symbol, period='3mo')
+            current_price_data = client.get_current_price(symbol)
+            current_price = current_price_data['price']
         finally:
             await client.close()
 

@@ -49,7 +49,7 @@ class Phase5IntegrationValidator(BaseValidator):
                 from data.yfinance_client import YFinanceClient
 
                 client = YFinanceClient()
-                data = await client.get_historical_data('AAPL', period='1mo')
+                data = client.get_historical_data('AAPL', period='1mo')
 
                 db = DatabaseClient()
                 # DatabaseClient connects automatically via constructor
@@ -172,7 +172,7 @@ class Phase5IntegrationValidator(BaseValidator):
                     # Train a quick model for testing
                     print("    Training model for test...")
                     client = YFinanceClient()
-                    data = await client.get_historical_data('AAPL', period='1y')
+                    data = client.get_historical_data('AAPL', period='1y')
                     fe = FeatureEngineer()
                     features = fe.create_features(data)
                     await ensemble.train(features, epochs_lstm=3)
@@ -224,7 +224,7 @@ class Phase5IntegrationValidator(BaseValidator):
                 print("    Running backtest (this may take a minute)...")
 
                 client = YFinanceClient()
-                data = await client.get_historical_data('AAPL', period='6mo')
+                data = client.get_historical_data('AAPL', period='6mo')
                 await client.close()
 
                 # Initialize strategy and engine with proper config
@@ -278,17 +278,21 @@ class Phase5IntegrationValidator(BaseValidator):
                 symbols = ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'META']
                 client = YFinanceClient()
 
-                # Fetch data concurrently
+                # Fetch data concurrently using async wrappers
+                async def fetch_price(symbol):
+                    """Async wrapper for synchronous get_current_price"""
+                    return client.get_current_price(symbol)
+
                 start = time.time()
-                tasks = [client.get_current_price(symbol) for symbol in symbols]
+                tasks = [fetch_price(symbol) for symbol in symbols]
                 prices = await asyncio.gather(*tasks, return_exceptions=True)
                 duration = (time.time() - start) * 1000
 
                 await client.close()
 
-                # Check for errors
+                # Check for errors - get_current_price returns a dict with 'price' key
                 errors = [p for p in prices if isinstance(p, Exception)]
-                valid_prices = [p for p in prices if not isinstance(p, Exception) and p > 0]
+                valid_prices = [p for p in prices if not isinstance(p, Exception) and isinstance(p, dict) and p.get('price', 0) > 0]
 
                 if len(errors) == 0 and len(valid_prices) == len(symbols):
                     avg_time = duration / len(symbols)
