@@ -9,13 +9,13 @@ from mcp.server import Server
 from mcp.server.stdio import stdio_server
 from mcp.types import Tool, TextContent
 
-from ..cache.redis_client import CacheKeys, RedisCache
-from ..data.database import DatabaseClient
-from ..data.validators import DataValidator
-from ..data.yfinance_client import YFinanceClient
-from ..indicators.technical_indicators import TechnicalIndicators
-from ..utils.config import settings
-from ..utils.logger import logger
+from cache.redis_client import CacheKeys, RedisCache
+from data.database import DatabaseClient
+from data.validators import DataValidator
+from data.yfinance_client import YFinanceClient
+from indicators.technical_indicators import TechnicalIndicators
+from utils.config import settings
+from utils.logger import logger
 
 
 class YFinanceTraderMCP:

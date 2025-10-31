@@ -1,0 +1,106 @@
+{
+  "timestamp": "2025-10-31T02:43:46.558513",
+  "metadata": {
+    "platform": "Linux",
+    "platform_version": "#1 SMP Sun Jan 10 15:06:54 PST 2016",
+    "python_version": "3.11.14",
+    "quick_mode": false,
+    "phases_run": [
+      2
+    ]
+  },
+  "summary": {
+    "total_phases": 1,
+    "phases_passed": 0,
+    "total_checks": 7,
+    "checks_passed": 0,
+    "overall_pass_rate": 0.0,
+    "total_duration_seconds": 1.662324,
+    "all_passed": false
+  },
+  "phases": [
+    {
+      "phase_number": 2,
+      "phase_name": "Data Layer",
+      "results": [
+        {
+          "name": "API Connectivity",
+          "status": "FAIL",
+          "status_display": "\u274c FAIL",
+          "message": "Failed to connect: No module named 'pydantic_settings'",
+          "details": {},
+          "duration_ms": 1191.64,
+          "timestamp": "2025-10-31T02:43:46.088386",
+          "passed": false
+        },
+        {
+          "name": "Historical Data Fetching",
+          "status": "FAIL",
+          "status_display": "\u274c FAIL",
+          "message": "Failed: No module named 'pydantic_settings'",
+          "details": {},
+          "duration_ms": 2.55,
+          "timestamp": "2025-10-31T02:43:46.091097",
+          "passed": false
+        },
+        {
+          "name": "Data Validation",
+          "status": "FAIL",
+          "status_display": "\u274c FAIL",
+          "message": "Failed: No module named 'pydantic_settings'",
+          "details": {},
+          "duration_ms": 2.38,
+          "timestamp": "2025-10-31T02:43:46.093539",
+          "passed": false
+        },
+        {
+          "name": "Technical Indicators",
+          "status": "FAIL",
+          "status_display": "\u274c FAIL",
+          "message": "Failed: No module named 'pythonjsonlogger'",
+          "details": {},
+          "duration_ms": 179.14,
+          "timestamp": "2025-10-31T02:43:46.272738",
+          "passed": false
+        },
+        {
+          "name": "Database Connection",
+          "status": "FAIL",
+          "status_display": "\u274c FAIL",
+          "message": "Connection failed: No module named 'pydantic_settings'",
+          "details": {},
+          "duration_ms": 203.46,
+          "timestamp": "2025-10-31T02:43:46.476285",
+          "passed": false
+        },
+        {
+          "name": "Database Storage",
+          "status": "FAIL",
+          "status_display": "\u274c FAIL",
+          "message": "Failed: No module named 'pydantic_settings'",
+          "details": {},
+          "duration_ms": 2.36,
+          "timestamp": "2025-10-31T02:43:46.478733",
+          "passed": false
+        },
+        {
+          "name": "Redis Cache",
+          "status": "FAIL",
+          "status_display": "\u274c FAIL",
+          "message": "Failed: No module named 'pydantic_settings'",
+          "details": {},
+          "duration_ms": 78.55,
+          "timestamp": "2025-10-31T02:43:46.557351",
+          "passed": false
+        }
+      ],
+      "passed_count": 0,
+      "total_count": 7,
+      "pass_rate": 0.0,
+      "duration_seconds": 1.66,
+      "passed": false,
+      "start_time": "2025-10-31T02:43:44.895647",
+      "end_time": "2025-10-31T02:43:46.557971"
+    }
+  ]
+}

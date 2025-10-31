@@ -9,8 +9,8 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.pool import NullPool, QueuePool
 
-from ..utils.config import settings
-from ..utils.logger import logger
+from utils.config import settings
+from utils.logger import logger
 
 
 class DatabaseClient:

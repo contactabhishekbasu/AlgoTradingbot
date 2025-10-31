@@ -1,0 +1,50 @@
+================================================================================
+AlgoTradingbot Validation Report
+================================================================================
+Generated: 2025-10-31 01:38:50
+
+Metadata:
+  platform: Linux
+  platform_version: #1 SMP Sun Jan 10 15:06:54 PST 2016
+  python_version: 3.11.14
+  quick_mode: False
+  phases_run: [2]
+
+Overall Summary:
+  Total Phases: 1
+  Phases Passed: 0
+  Total Checks: 7
+  Checks Passed: 0
+  Pass Rate: 0.0%
+  Total Duration: 0.0s
+  Status: ❌ FAIL
+
+--------------------------------------------------------------------------------
+Phase 2: Data Layer
+  Status: ❌ FAIL
+  Checks: 0/7 passed (0.0%)
+  Duration: 0.0s
+
+  ❌ FAIL API Connectivity
+      Failed to connect: No module named 'pandas'
+      Duration: 6.6ms
+  ❌ FAIL Historical Data Fetching
+      Failed: No module named 'pandas'
+      Duration: 1.6ms
+  ❌ FAIL Data Validation
+      Failed: No module named 'pandas'
+      Duration: 1.8ms
+  ❌ FAIL Technical Indicators
+      Failed: No module named 'numpy'
+      Duration: 5.6ms
+  ❌ FAIL Database Connection
+      Connection failed: No module named 'pandas'
+      Duration: 4.0ms
+  ❌ FAIL Database Storage
+      Failed: No module named 'pandas'
+      Duration: 1.6ms
+  ❌ FAIL Redis Cache
+      Failed: No module named 'pandas'
+      Duration: 9.8ms
+
+================================================================================

@@ -1,0 +1,50 @@
+================================================================================
+AlgoTradingbot Validation Report
+================================================================================
+Generated: 2025-10-31 02:43:22
+
+Metadata:
+  platform: Linux
+  platform_version: #1 SMP Sun Jan 10 15:06:54 PST 2016
+  python_version: 3.11.14
+  quick_mode: False
+  phases_run: [2]
+
+Overall Summary:
+  Total Phases: 1
+  Phases Passed: 0
+  Total Checks: 7
+  Checks Passed: 0
+  Pass Rate: 0.0%
+  Total Duration: 1.5s
+  Status: ❌ FAIL
+
+--------------------------------------------------------------------------------
+Phase 2: Data Layer
+  Status: ❌ FAIL
+  Checks: 0/7 passed (0.0%)
+  Duration: 1.5s
+
+  ❌ FAIL API Connectivity
+      Failed to connect: No module named 'pydantic'
+      Duration: 1160.4ms
+  ❌ FAIL Historical Data Fetching
+      Failed: No module named 'pydantic'
+      Duration: 2.7ms
+  ❌ FAIL Data Validation
+      Failed: No module named 'pydantic'
+      Duration: 2.3ms
+  ❌ FAIL Technical Indicators
+      Failed: No module named 'structlog'
+      Duration: 8.7ms
+  ❌ FAIL Database Connection
+      Connection failed: No module named 'pydantic'
+      Duration: 241.2ms
+  ❌ FAIL Database Storage
+      Failed: No module named 'pydantic'
+      Duration: 2.9ms
+  ❌ FAIL Redis Cache
+      Failed: No module named 'pydantic'
+      Duration: 85.4ms
+
+================================================================================

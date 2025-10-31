@@ -1,0 +1,106 @@
+{
+  "timestamp": "2025-10-31T02:44:09.656105",
+  "metadata": {
+    "platform": "Linux",
+    "platform_version": "#1 SMP Sun Jan 10 15:06:54 PST 2016",
+    "python_version": "3.11.14",
+    "quick_mode": false,
+    "phases_run": [
+      2
+    ]
+  },
+  "summary": {
+    "total_phases": 1,
+    "phases_passed": 0,
+    "total_checks": 7,
+    "checks_passed": 0,
+    "overall_pass_rate": 0.0,
+    "total_duration_seconds": 2.456528,
+    "all_passed": false
+  },
+  "phases": [
+    {
+      "phase_number": 2,
+      "phase_name": "Data Layer",
+      "results": [
+        {
+          "name": "API Connectivity",
+          "status": "FAIL",
+          "status_display": "\u274c FAIL",
+          "message": "Failed to connect: argument of type 'NoneType' is not iterable",
+          "details": {},
+          "duration_ms": 2102.53,
+          "timestamp": "2025-10-31T02:44:09.302417",
+          "passed": false
+        },
+        {
+          "name": "Historical Data Fetching",
+          "status": "FAIL",
+          "status_display": "\u274c FAIL",
+          "message": "Failed: argument of type 'NoneType' is not iterable",
+          "details": {},
+          "duration_ms": 44.57,
+          "timestamp": "2025-10-31T02:44:09.347048",
+          "passed": false
+        },
+        {
+          "name": "Data Validation",
+          "status": "FAIL",
+          "status_display": "\u274c FAIL",
+          "message": "Failed: argument of type 'NoneType' is not iterable",
+          "details": {},
+          "duration_ms": 25.65,
+          "timestamp": "2025-10-31T02:44:09.372763",
+          "passed": false
+        },
+        {
+          "name": "Technical Indicators",
+          "status": "FAIL",
+          "status_display": "\u274c FAIL",
+          "message": "Failed: No data available for AAPL",
+          "details": {},
+          "duration_ms": 15.13,
+          "timestamp": "2025-10-31T02:44:09.387964",
+          "passed": false
+        },
+        {
+          "name": "Database Connection",
+          "status": "FAIL",
+          "status_display": "\u274c FAIL",
+          "message": "Connection failed: cannot import name 'DatabaseManager' from 'data.database' (/home/user/AlgoTradingbot/src/data/database.py)",
+          "details": {},
+          "duration_ms": 189.13,
+          "timestamp": "2025-10-31T02:44:09.577158",
+          "passed": false
+        },
+        {
+          "name": "Database Storage",
+          "status": "FAIL",
+          "status_display": "\u274c FAIL",
+          "message": "Failed: cannot import name 'DatabaseManager' from 'data.database' (/home/user/AlgoTradingbot/src/data/database.py)",
+          "details": {},
+          "duration_ms": 0.02,
+          "timestamp": "2025-10-31T02:44:09.577295",
+          "passed": false
+        },
+        {
+          "name": "Redis Cache",
+          "status": "FAIL",
+          "status_display": "\u274c FAIL",
+          "message": "Failed: cannot import name 'CacheManager' from 'cache.redis_client' (/home/user/AlgoTradingbot/src/cache/redis_client.py)",
+          "details": {},
+          "duration_ms": 77.62,
+          "timestamp": "2025-10-31T02:44:09.654984",
+          "passed": false
+        }
+      ],
+      "passed_count": 0,
+      "total_count": 7,
+      "pass_rate": 0.0,
+      "duration_seconds": 2.46,
+      "passed": false,
+      "start_time": "2025-10-31T02:44:07.198995",
+      "end_time": "2025-10-31T02:44:09.655523"
+    }
+  ]
+}

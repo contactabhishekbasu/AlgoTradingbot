@@ -163,9 +163,9 @@ class Phase2DataValidator(BaseValidator):
         """Check PostgreSQL database connection"""
         async def check():
             try:
-                from data.database import DatabaseManager
+                from data.database import DatabaseClient
 
-                db = DatabaseManager()
+                db = DatabaseClient()
                 await db.connect()
 
                 # Test query
@@ -224,9 +224,9 @@ class Phase2DataValidator(BaseValidator):
         """Check Redis cache operations"""
         async def check():
             try:
-                from cache.redis_client import CacheManager
+                from cache.redis_client import RedisCache
 
-                cache = CacheManager()
+                cache = RedisCache()
                 await cache.connect()
 
                 # Test set

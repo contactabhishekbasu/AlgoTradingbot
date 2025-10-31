@@ -29,12 +29,12 @@ plotly>=5.17.0  # Interactive charts for dashboard
 
 # Technical Analysis
 ta-lib>=0.4.28  # Technical indicators (requires C library)
-pandas-ta>=0.3.14b  # Pure Python alternative
+# pandas-ta>=0.3.14b  # Pure Python alternative - commented out due to version issues
 
 # Market Data
 yfinance>=0.2.31  # Yahoo Finance API
-alpaca-py>=0.16.0  # Alpaca Trading API (future)
-alpaca-trade-api>=3.0.0  # Alternative Alpaca client
+# alpaca-py>=0.16.0  # Alpaca Trading API (future) - commented out due to websockets conflict
+# alpaca-trade-api>=3.0.0  # Alternative Alpaca client - commented out due to websockets conflict
 
 # Database
 psycopg2-binary>=2.9.9  # PostgreSQL adapter
@@ -48,11 +48,11 @@ hiredis>=2.2.3  # High-performance Redis parser
 # Async & Networking
 aiohttp>=3.9.0  # Async HTTP client
 asyncio-mqtt>=0.16.1  # Async MQTT (future)
-websockets>=12.0  # WebSocket support
+websockets>=11.0,<12.0  # WebSocket support (constrained for alpaca-py compatibility)
 
 # MCP Server Development
-mcp>=0.1.0  # Model Context Protocol SDK (if available)
-fastmcp>=0.1.0  # Fast MCP implementation (if available)
+# mcp>=0.1.0  # Model Context Protocol SDK (if available) - commented out, not available in PyPI
+# fastmcp>=0.1.0  # Fast MCP implementation (if available) - commented out, not available in PyPI
 
 # API Development (Future)
 fastapi>=0.104.1
